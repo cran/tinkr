@@ -12,6 +12,10 @@ This class is a fancy wrapper around the results of \code{\link[=to_xml]{to_xml(
 has methods that make it easier to add, analyze, remove, or write elements
 of your markdown document.
 }
+\note{
+this requires the \code{sourcepos} attribute to be recorded when the
+object is initialised. See \code{\link[=protect_unescaped]{protect_unescaped()}} for details.
+}
 \examples{
 
 ## ------------------------------------------------
@@ -82,7 +86,7 @@ xml2::xml_find_all(ex$body, "md:heading", ex$ns)
 xml2::xml_find_all(ex$body, "md:list", ex$ns)
 tmp <- tempfile()
 ex$write(tmp)
-readLines(tmp, n = 20) 
+readLines(tmp, n = 20)
 
 ## ------------------------------------------------
 ## Method `yarn$protect_math`
@@ -92,6 +96,23 @@ path <- system.file("extdata", "math-example.md", package = "tinkr")
 ex <- tinkr::yarn$new(path)
 ex$tail() # math blocks are escaped :(
 ex$protect_math()$tail() # math blocks are no longer escaped :)
+
+## ------------------------------------------------
+## Method `yarn$protect_curly`
+## ------------------------------------------------
+
+path <- system.file("extdata", "basic-curly.md", package = "tinkr")
+ex <- tinkr::yarn$new(path)
+ex$protect_curly()$head()
+
+## ------------------------------------------------
+## Method `yarn$protect_unescaped`
+## ------------------------------------------------
+
+path <- system.file("extdata", "basic-curly.md", package = "tinkr")
+ex <- tinkr::yarn$new(path, sourcepos = TRUE, unescaped = FALSE)
+ex$tail()
+ex$protect_unescaped()$tail()
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -118,6 +139,8 @@ commonmark.}
 \item \href{#method-yarn-tail}{\code{yarn$tail()}}
 \item \href{#method-yarn-add_md}{\code{yarn$add_md()}}
 \item \href{#method-yarn-protect_math}{\code{yarn$protect_math()}}
+\item \href{#method-yarn-protect_curly}{\code{yarn$protect_curly()}}
+\item \href{#method-yarn-protect_unescaped}{\code{yarn$protect_unescaped()}}
 \item \href{#method-yarn-clone}{\code{yarn$clone()}}
 }
 }
@@ -339,7 +362,7 @@ xml2::xml_find_all(ex$body, "md:heading", ex$ns)
 xml2::xml_find_all(ex$body, "md:list", ex$ns)
 tmp <- tempfile()
 ex$write(tmp)
-readLines(tmp, n = 20) 
+readLines(tmp, n = 20)
 }
 \if{html}{\out{</div>}}
 
@@ -361,6 +384,49 @@ Protect math blocks from being escaped
 ex <- tinkr::yarn$new(path)
 ex$tail() # math blocks are escaped :(
 ex$protect_math()$tail() # math blocks are no longer escaped :)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-yarn-protect_curly"></a>}}
+\if{latex}{\out{\hypertarget{method-yarn-protect_curly}{}}}
+\subsection{Method \code{protect_curly()}}{
+Protect curly phrases \code{{likethat}} from being escaped
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{yarn$protect_curly()}\if{html}{\out{</div>}}
+}
+
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{path <- system.file("extdata", "basic-curly.md", package = "tinkr")
+ex <- tinkr::yarn$new(path)
+ex$protect_curly()$head()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-yarn-protect_unescaped"></a>}}
+\if{latex}{\out{\hypertarget{method-yarn-protect_unescaped}{}}}
+\subsection{Method \code{protect_unescaped()}}{
+Protect unescaped square braces from being escaped.
+
+This is applied by default when you use \code{yarn$new(sourcepos = TRUE)}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{yarn$protect_unescaped()}\if{html}{\out{</div>}}
+}
+
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{path <- system.file("extdata", "basic-curly.md", package = "tinkr")
+ex <- tinkr::yarn$new(path, sourcepos = TRUE, unescaped = FALSE)
+ex$tail()
+ex$protect_unescaped()$tail()
 }
 \if{html}{\out{</div>}}
 

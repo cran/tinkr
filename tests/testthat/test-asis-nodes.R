@@ -1,7 +1,7 @@
 pathmath <- system.file("extdata", "math-example.md", package = "tinkr")
 patherr  <- system.file("extdata", "basic-math.md", package = "tinkr")
-m <- yarn$new(pathmath)
-me <- yarn$new(patherr)
+m <- yarn$new(pathmath, sourcepos = TRUE)
+me <- yarn$new(patherr, sourcepos = TRUE)
 
 test_that("mal-formed inline math throws an informative error", {
   expect_snapshot_error(me$protect_math())
@@ -76,5 +76,12 @@ test_that("documents with no math do no harm", {
   expect_equal(md_ns()[[1]], xml2::xml_ns(x)[[1]])
   # block math does nothing
   expect_equal(as.character(x), x1)
+})
+
+test_that("protect_unescaped() will throw a warning if no sourcpos is available", {
+  x <- to_xml(m$path)
+  expect_warning({
+    protect_unescaped(x$body, txt = readLines(m$path)[-seq_along(m$yaml)], "sourcepos")
+  })
 })
 

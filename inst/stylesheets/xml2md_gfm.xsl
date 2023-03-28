@@ -36,30 +36,33 @@
     <xsl:template match="md:link[@rel] | md:image[@rel]">
       <xsl:if test="self::md:image">!</xsl:if>
       <xsl:text>[</xsl:text>
-      <xsl:apply-templates select="md:*"/>
-      <xsl:text>][</xsl:text>
+      <!-- use only one set of brackets for links where the key matches the text-->
+      <xsl:if test="not(string(self::md:*)=string(@rel))">
+        <xsl:apply-templates select="md:*"/>
+        <xsl:text>][</xsl:text>
+      </xsl:if>
       <xsl:value-of select='string(@rel)'/>
       <xsl:text>]</xsl:text>
     </xsl:template>
 
     <xsl:template match="md:link[@anchor]">
-    <xsl:if test="self::md:image">!</xsl:if>
-    <xsl:text>[</xsl:text>
-    <xsl:apply-templates select="md:*"/>
-    <xsl:text>]: </xsl:text>
-    <xsl:call-template name="escape-text">
-        <xsl:with-param name="text" select="string(@destination)"/>
-        <xsl:with-param name="escape" select="'()'"/>
-    </xsl:call-template>
-    <xsl:if test="string(@title)">
-        <xsl:text> "</xsl:text>
-        <xsl:call-template name="escape-text">
-            <xsl:with-param name="text" select="string(@title)"/>
-            <xsl:with-param name="escape" select="'&quot;'"/>
-        </xsl:call-template>
-        <xsl:text>"</xsl:text>
-    </xsl:if>
-    <xsl:text>&#10;</xsl:text>
+      <xsl:if test="self::md:image">!</xsl:if>
+      <xsl:text>[</xsl:text>
+      <xsl:value-of select='string(.)'/>
+      <xsl:text>]: </xsl:text>
+      <xsl:call-template name="escape-text">
+          <xsl:with-param name="text" select="string(@destination)"/>
+          <xsl:with-param name="escape" select="'()'"/>
+      </xsl:call-template>
+      <xsl:if test="string(@title)">
+          <xsl:text> "</xsl:text>
+          <xsl:call-template name="escape-text">
+              <xsl:with-param name="text" select="string(@title)"/>
+              <xsl:with-param name="escape" select="'&quot;'"/>
+          </xsl:call-template>
+          <xsl:text>"</xsl:text>
+      </xsl:if>
+      <xsl:text>&#10;</xsl:text>
     </xsl:template>
 
     <xsl:template match="md:tasklist">

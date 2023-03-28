@@ -1,6 +1,6 @@
 Package: tinkr
 Title: Cast '(R)Markdown' Files to 'XML' and Back Again
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: 
     c(person(given = "Maëlle",
              family = "Salmon",
@@ -37,15 +37,15 @@ License: GPL-3
 URL: https://docs.ropensci.org/tinkr/,
         https://github.com/ropensci/tinkr
 BugReports: https://github.com/ropensci/tinkr/issues
-Imports: commonmark (>= 1.6), glue, magrittr, purrr, R6, stringr, xml2,
-        xslt, yaml
+Imports: commonmark (>= 1.6), glue, magrittr, purrr, R6, xml2, xslt,
+        yaml
 Suggests: knitr, rmarkdown, covr, testthat (>= 3.0.0), withr
 Config/testthat/edition: 3
 Encoding: UTF-8
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2022-08-18 16:49:37 UTC; zhian
+Packaged: 2023-03-28 14:41:03 UTC; zhian
 Author: Maëlle Salmon [aut] (<https://orcid.org/0000-0002-2815-0399>),
   Zhian N. Kamvar [aut, cre] (<https://orcid.org/0000-0003-1458-7108>),
   Jeroen Ooms [aut],
@@ -54,4 +54,4 @@ Author: Maëlle Salmon [aut] (<https://orcid.org/0000-0002-2815-0399>),
   Peter Daengeli [ctb]
 Maintainer: Zhian N. Kamvar <zkamvar@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-08-19 12:30:02 UTC
+Date/Publication: 2023-03-28 15:10:02 UTC
